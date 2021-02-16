@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1065310680851",
+    "project_id": "akkelny3",
+    "storage_bucket": "akkelny3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065310680851:android:c499cdaaf946c87130cce6",
+        "android_client_info": {
+          "package_name": "com.example.akkelny3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065310680851-6a1jqnq5msc2ommd3mj89am7udud00g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.akkelny3",
+            "certificate_hash": "96a94e242585030cd63bb2a096b8f51f7122b42b"
+          }
+        },
+        {
+          "client_id": "1065310680851-ugvr8cll3cpinulgnjelig82179f5jdu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.akkelny3",
+            "certificate_hash": "6142a599123b5701c0220b6ed253e0e1c77775b7"
+          }
+        },
+        {
+          "client_id": "1065310680851-0bju4cotj08gp0nt7qabucp5c737in0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKz37qGy8z4RZQgGhZCprcKzPB-5fOOY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065310680851-0bju4cotj08gp0nt7qabucp5c737in0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
