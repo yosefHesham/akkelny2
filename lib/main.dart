@@ -1,5 +1,6 @@
 import 'package:akkelny3/bloc/auth_repo.dart';
 import 'package:akkelny3/bloc/authbloc_bloc.dart';
+import 'package:akkelny3/bloc/bloc/form_bloc.dart';
 import 'package:akkelny3/screens/auth_screen.dart';
 import 'package:akkelny3/screens/home_screen.dart';
 import 'package:akkelny3/screens/intro_page.dart';
@@ -22,8 +23,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(AuthRepo()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: AuthBloc(AuthRepo())),
+        BlocProvider.value(value: FormBloc())
+      ],
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(primarySwatch: Colors.deepOrange),

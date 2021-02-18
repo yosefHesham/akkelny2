@@ -24,6 +24,10 @@ class AuthBloc extends Bloc<AuthblocEvent, AuthblocState> {
     } else if (event is GoogleSignInEvent) {
       yield AuthLoadingState();
       yield await _authRepo.googleSign();
+    } else if (event is SignUpEvent) {
+      print("NAme: ${event.name}");
+    } else if (event is SignInEvent) {
+      print("mail : ${event.email}");
     }
   }
 }

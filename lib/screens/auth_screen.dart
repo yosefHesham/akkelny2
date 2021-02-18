@@ -1,4 +1,5 @@
 import 'package:akkelny3/bloc/authbloc_bloc.dart';
+import 'package:akkelny3/bloc/bloc/form_bloc.dart';
 import 'package:akkelny3/public.dart';
 import 'package:akkelny3/widgets/auth_button.dart';
 import 'package:akkelny3/widgets/my_form.dart';
@@ -38,27 +39,9 @@ class _AuthScreenState extends State<AuthScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: size.height * .1),
-              BlocBuilder<AuthBloc, AuthblocState>(
-                builder: (context, state) {
-                  return Text(
-                    state is SignInState || state is AuthblocInitial
-                        ? 'Sign In'
-                        : 'Sign Up',
-                    style: TextStyle(
-                        color: mainColor,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold),
-                  );
-                },
-              ),
+              title(),
               SizedBox(height: size.height * .02),
-              Text(
-                'Or Continue With Your Social Netowrks',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black54),
-              ),
+              buildContinueWithSOMText(),
               SizedBox(height: size.height * .05),
               smAuth(),
               SizedBox(height: size.height * .05),
@@ -66,29 +49,8 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: size.height * .05,
               ),
-              BlocBuilder<AuthBloc, AuthblocState>(builder: (context, state) {
-                if (state is SwitchToSignUp) {
-                  return AuthButton("Sign Up", () => null);
-                } else if (state is SignInState) {
-                  return AuthButton("Sign In", () => null);
-                }
-                return AuthButton("Sign In", () => null);
-              }),
+              switchAuth(),
               SizedBox(height: size.height * .04),
-              BlocBuilder<AuthBloc, AuthblocState>(builder: (context, state) {
-                return state is SwitchToSignUp
-                    ? Container()
-                    : AuthButton("Sign Up", _switchToSignUp);
-              }),
-              BlocBuilder<AuthBloc, AuthblocState>(
-                builder: (context, state) {
-                  return state is SwitchToSignUp
-                      ? TextButton(
-                          onPressed: () => addEvent(SwitchToSignInEvent()),
-                          child: Text("Already registred! Sign In "))
-                      : Container();
-                },
-              )
             ],
           ),
         ),
@@ -96,7 +58,60 @@ class _AuthScreenState extends State<AuthScreen> {
     ));
   }
 
-  _switchToSignUp() => addEvent(SwitchToSignUpEvent());
+  Widget switchAuth() {
+    return BlocBuilder<AuthBloc, AuthblocState>(builder: (context, state) {
+      if (state is SwitchToSignUp) {
+        return Column(
+          children: [
+            AuthButton(
+              "Sign Up",
+              () => _submitForm(context, isSignUp: true),
+            ),
+            TextButton(
+                onPressed: () => addEvent(SwitchToSignInEvent()),
+                child: Text("Already registred! Sign In "))
+          ],
+        );
+      }
+      return Column(
+        children: [
+          AuthButton("Sign In", () => _submitForm(context)),
+          TextButton(
+            child: Text(
+              'You don`t have an account ? Regiter now !',
+              style: TextStyle(color: firstColor),
+            ),
+            onPressed: () => addEvent(SwitchToSignUpEvent()),
+          )
+        ],
+      );
+    });
+  }
+
+  void _submitForm(BuildContext context, {bool isSignUp = false}) =>
+      BlocProvider.of<FormBloc>(context).add(SubmitFormEvent(isSignUp));
+
+  BlocBuilder<AuthBloc, AuthblocState> title() {
+    return BlocBuilder<AuthBloc, AuthblocState>(
+      builder: (context, state) {
+        return Text(
+          state is SignInState || state is AuthblocInitial
+              ? 'Sign In'
+              : 'Sign Up',
+          style: TextStyle(
+              color: mainColor, fontSize: 25, fontWeight: FontWeight.bold),
+        );
+      },
+    );
+  }
+
+  Text buildContinueWithSOMText() {
+    return Text(
+      'Or Continue With Your Social Netowrks',
+      style: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black54),
+    );
+  }
 
   Widget smAuth() {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
